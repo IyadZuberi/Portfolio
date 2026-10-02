@@ -73,15 +73,16 @@ Shelf contents are copied from the CV skills section word for word.
 
 The player is a pixel version of Iyad in an Ash-style trainer outfit, and every other character has a clear job in the portfolio.
 
-**Player avatar spec (from the supplied photo)**
+**Player avatar spec (built and approved in phase 1, final)**
 
-- Thick dark hair, swept back and up with a side part and short sides.
-- Clear-framed square aviator glasses with a thin metal bridge.
-- Full dark beard with a defined cheek line, plus a trimmed moustache.
-- Warm medium-light skin tone, sturdy build.
-- Outfit: cap, jacket and backpack in original colours (not Ash's), with a white collared shirt underneath as a nod to the photo.
-- The cap is on by default. At 16×24 pixels the beard reads as a dark lower face and the glasses as a light bar across the eyes. A larger 64×64 portrait (trainer card, dialogue box) shows the full detail. The Home mirror toggles the cap off to show the hair.
-- Animations: 4-direction idle, walk and run, plus a surf pose and a battle back-sprite.
+- Thick dark brown hair, swept back and up, drawn as strand clusters with a highlight.
+- Over-ear headphones are the default headwear: a charcoal band over the crown and down to the ears, teal ear cups, and a small gold dot on each cup. A cap (teal, white-and-gold badge, front-only brim) and a no-headwear option stay in the code, switchable per sprite.
+- Thin light grey-blue square glasses with clear lenses: the skin and the dark eyes show through, with one glint pixel in the top-left corner of each lens.
+- Full close-trimmed beard that wraps the mouth: moustache joined to the chin beard at both corners, a defined jawline and a short fade at the cheek line. The mouth is one small dark line inside the beard.
+- Warm medium-light skin tone, slim relaxed build: shoulders only slightly wider than the hips.
+- Outfit: teal zip jacket over a white collared shirt, charcoal trousers and an orange backpack. All original colours.
+- Sizes: 16×32 overworld sprites (FireRed proportions: the head is about half the figure and wider than the body); 80×80 portrait, trainer and battle back-sprite (Black and White size). The Home mirror toggles the headwear.
+- Animations: 4-direction idle, walk and run, plus interact, item-get, ledge hop, a surf pose and a 5-frame battle throw.
 
 **NPC roster**
 
@@ -286,9 +287,12 @@ The build uses Iyad's existing web stack, with one content file feeding both the
 
 **Art pipeline**
 
-- One fixed palette (about 32 colours) shared by every asset.
-- Sprites are drawn in code, packed into texture atlases and reviewed on contact sheets before use.
-- Asset list (tiles 16×16, characters about 16×24, battle sprites 64×64): player (4 directions, idle, walk, run, surf, battle back), about 14 NPC sprites, 3 starters and 10 wild creatures (front and back), tiles (grass, tall grass, paths, water, trees, fences, flowers), 5 hometown buildings, 3 hub buildings, 3 gyms, the Hall, interiors, 4 battle backdrops, UI frames and the title logo.
+- One fixed palette of exactly 32 colours (`src/art/palette.ts`) shared by every asset. Each sprite uses at most 15 of them.
+- Sprites are drawn in code with the helpers in `src/art/draw.ts`, and reviewed on the two sheets in `docs/review` before use: `sheet-model.png` (the character) and `sheet-scenes.png` (every screen). Both render at whole-number, nearest-neighbour scales only.
+- Sizes: 16×16 tiles, 16×32 overworld characters, 80×80 portrait, trainer and battle sprites.
+- Shading: 3 shades per material, light from the top-left, hue-shifted ramps (cooler shadows, warmer highlights) and selective outlining.
+- Asset list: player (4 directions, idle, walk, run, interact, item-get, ledge hop, surf, battle throw), about 14 NPC sprites, 3 starters and 10 wild creatures (front and back), tiles (grass, tall grass, paths, water, trees, fences, flowers), 5 hometown buildings, 3 hub buildings, 3 gyms, the Hall, interiors, 4 battle backdrops, UI frames and the title logo.
+- **Creatures are not designed yet.** Every creature and ridable mount renders as a plain grey silhouette labelled "PLACEHOLDER" until the creature design round. The Debug Ball, its throw and its catch are finished.
 - Better hand-drawn art can replace any sprite later by swapping the file. An optional polish layer (day/night tint, soft lighting, light depth effects) comes last, through Phaser's lighting and post effects, each with an off switch.
 
 **Audio.** Original chiptune loops (title, hometown, route, hub city, gym, wild battle, gym battle, Hall of Fame) and sound effects (steps, bump, menu, confirm, heal jingle, badge fanfare), generated in code or taken from licensed free packs.
@@ -305,13 +309,14 @@ The build uses Iyad's existing web stack, with one content file feeding both the
 
 ## Build phases
 
-The build runs in eight phases, each ending in something that can be opened and tested, with placeholder art first and real art last.
+The build runs in nine phases, each ending in something that can be opened and tested, with placeholder art first and real art last.
 
 | Phase | Deliverable | Done when |
 | --- | --- | --- |
-| 1. Style foundation | Palette, avatar sprite, sprite pipeline, contact sheet | Avatar reads clearly at game size and Iyad approves the look |
+| 1. Style foundation | Palette, avatar sprite, sprite pipeline, model sheet | Avatar reads clearly at game size and Iyad approves the look (done) |
 | 2. Engine | Grid movement, collisions, dialogue boxes, Esc menu, saves | Player walks a test map, and Esc shows all links |
 | 3. Hometown and title | Title screen, Resume View, Home, Lab, LinkedIn, GitHub, Contact Centre | A visitor can reach CV, links and contact in under 10 seconds |
+| 3b. Creature design round | The 3 starters and 10 wild creatures, front and back, replacing the grey placeholders | Every creature reads at battle size and Iyad approves each design |
 | 4. Route 1 and battles | Tall grass, wild battles, Skilldex, rival, Surf | Battles run end to end and cannot be lost |
 | 5. Junction City | Career Hall, Academy, Skills Mart | Every CV job, degree fact and skill is readable in-game |
 | 6. Gyms | Three gyms, puzzles, leaders, badges, case study cards, Fly | All five CV projects playable, puzzles skippable |
