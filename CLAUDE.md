@@ -11,6 +11,7 @@ Spec: docs/DESIGN.md. Follow it and ask before deviating.
 - FireRed style: 16px tiles, flat colours, one fixed palette in src/art/palette.ts.
 - Work one phase at a time and stop at that phase's "Done when" criteria.
 - Add a Playwright test for each phase. Commit when it passes.
+- Always use the ponytail, caveman and superpowers plugins on this project. Ponytail (full) for code: the simplest working solution. Caveman (full) for chat replies: terse. Superpowers: use the matching skill before acting (brainstorming before new features, systematic-debugging before fixes, verification-before-completion before claiming done).
 
 ## Art rules
 - The player character is final (phase 1, headphones version). Do not change its design.
